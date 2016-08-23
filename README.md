@@ -1,2 +1,2 @@
 # chtMultiRegionReactingFoamTutorial
-Tutorial for chtMultiRegionReactingFoam
+Tutorial for chtMultiRegionReactingFoam for OpenFOAM-dev and OpenFOAM 4.0.
