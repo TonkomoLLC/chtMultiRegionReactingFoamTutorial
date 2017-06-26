@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  3.0.1                                 |
+|  \\    /   O peration     | Version:  dev                                   |
 |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -10,24 +10,16 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    location    "system";
     object      fvSolution;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 solvers
 {
-    rho
+    "(rho|rhoFinal)"
     {
-        solver          PCG;
+        solver          PCG
         preconditioner  DIC;
-        tolerance       1e-7;
-        relTol          0.1;
-    }
-
-    rhoFinal
-    {
-        $rho;
         tolerance       1e-7;
         relTol          0;
     }
@@ -49,33 +41,28 @@ solvers
         relTol           0;
     }
 
-
-    "(U|h|k|epsilon)"
+    "(U|h|k|Yi|epsilon|R)"
     {
-        solver          PBiCG;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          0.1;
+        solver           PBiCGStab;
+        preconditioner   DILU;
+        tolerance        1e-7;
+        relTol           0.1;
     }
 
-    "(U|h|k|epsilon)Final"
+    "(U|h|k|Yi|epsilon|R)Final"
     {
         $U;
-        relTol          0;
-    }
-
-    Yi
-    {
-        $hFinal;
+        tolerance        1e-07;
+        relTol           0;
     }
 }
 
 PIMPLE
 {
-    momentumPredictor no;
-    nOuterCorrectors  1;
-    nCorrectors     2;
+    momentumPredictor   yes;
+    nCorrectors         2;
     nNonOrthogonalCorrectors 0;
+    PEqnOldMethod       yes;   //use PEqn from before commit 79ff91350ef6092b2dd864029a6023bec2b66b50
 }
 
 relaxationFactors
