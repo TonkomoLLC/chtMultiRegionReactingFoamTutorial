@@ -62,7 +62,7 @@ PIMPLE
     momentumPredictor   yes;
     nCorrectors         2;
     nNonOrthogonalCorrectors 0;
-    PEqnOldMethod       yes;   //use PEqn from before commit 79ff91350ef6092b2dd864029a6023bec2b66b50
+//    PEqnOldMethod       yes;   //use PEqn from before commit 79ff91350ef6092b2dd864029a6023bec2b66b50
 }
 
 relaxationFactors
